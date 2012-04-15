@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require('fs'),
+    spawn = require('child_process').spawn,
     readline = require('readline'),
     uglify = require('uglify-js'),
     stringEx = require('stringex'),
@@ -45,13 +46,25 @@ rl.question('Enter article title : ', function(title) {
            
             //TODO: double quotation!!
             var header = JSON.stringify(head, null, 4);
-            fs.writeFileSync(conf.sourceDir +'/articles/'+ title +'.markdown', header +'\n\nwrite here!', 'utf8');
+            var path = conf.sourceDir +'/articles/' + title +'.markdown';
+            fs.writeFileSync(path, header +'\n\nwrite here!', 'utf8');
             
-            console.log('write post -> ', conf.sourceDir +'/articles/'+ title +'.markdown');
-
+            console.log('write post -> ', path);
             rl.close();
-            process.stdin.destroy();
+            process.stdin.destory();
 
+            //instant edit
+            /*rl.question(title +'.markdown editing at now? [y/n]', function(answer) {
+                if (answer.charAt(0).toUpperCase() == 'N') {
+                } else {
+                    spawn('open', ['http://localhost:8001/write?'+ path]);
+                }
+
+                rl.close();
+                process.stdin.destroy();
+
+            });*/
+            
         });
     });
 });
