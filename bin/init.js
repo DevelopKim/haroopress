@@ -17,6 +17,7 @@ function init() {
 
             exec('git init', function(code, stdout, stderr) {
                 console.log('haroo> blog data initialized'.yellow);
+                exec('git commit -am "initial commit"', function(code, stdout, stderr) {})
             });
         });
     });
